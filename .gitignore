@@ -1,0 +1,19 @@
+# Entorno virtual
+.venv/
+
+# Datos brutos: se regeneran con los scripts de descarga
+data/raw/*
+!data/raw/.gitkeep
+
+# Claves y secretos
+.env
+
+# Python
+__pycache__/
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Ficheros temporales de Office / Power BI
+~$*
