@@ -21,7 +21,7 @@ El precio de mercado que también publica REData se usará como **fuente secunda
 |---|---|---|
 | Reliable | Parcial | Los datos recientes son provisionales y se consolidan meses después con las lecturas de los contadores. |
 | Original | Sí | Es la API de la propia REE, que mide la generación y la demanda. |
-| Comprehensive | Sí | Tiene los datos que necesito y cubre todo el periodo de análisis (2022-2025). |
+| Comprehensive | Parcial | Cubre todo el periodo de análisis (2022-2025), pero no sirve datos horarios de demanda ni de generación (ver Limitaciones). |
 | Current | Sí | Publica los datos con unas horas de retraso. |
 | Cited | Sí | Es el operador oficial del sistema eléctrico español; fuente fiable y reconocida. |
  
@@ -44,6 +44,7 @@ El precio de mercado que también publica REData se usará como **fuente secunda
 | Cited | Sí | Es el mercado oficial del gas en España y Portugal; su índice diario es la referencia que usa el sector. |
  
 ## Limitaciones y cómo se tratan
+- **REData no sirve datos horarios (comprobado el 24/11/2026):** `demanda/evolucion` y `generacion/estructura-generacion` devuelven error 400 ("Los datos solicitados no están disponibles") con `time_trunc=hour`, también con el filtro peninsular (`geo_ids=8741`). Con `time_trunc=day` funcionan. **Decisión:** usar ESIOS (token solicitado el 24/11/2026) como fuente de demanda y generación horarias; REData queda para datos diarios y comprobaciones.
 - **Datos provisionales (REData):** anotar la fecha de descarga y volver a descargar los meses recientes antes del análisis final.
 - **Cambio a 15 minutos (OMIE, desde 01/10/2025):** agregar a horas con la media de los cuatro cuartos y comprobar que cada hora tiene exactamente cuatro valores.
 - **Precio del gas diario (MIBGAS):** repetir el valor del día en sus 24 horas. No recoge variaciones dentro del día.
