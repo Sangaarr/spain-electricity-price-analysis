@@ -43,6 +43,22 @@ El precio de mercado que también publica REData se usará como **fuente secunda
 | Current | Sí | Se publica de forma prácticamente actualizada. |
 | Cited | Sí | Es el mercado oficial del gas en España y Portugal; su índice diario es la referencia que usa el sector. |
  
+## Formato de los ficheros de OMIE (precio del mercado diario)
+Revisado a mano el 24/11/2026 con los ficheros del 01/01/2024 y de noviembre de 2025.
+ 
+- **Ubicación:** acceso a ficheros de omie.es → Mercado Diario → 1. Precios → "Precios horarios del mercado diario en España" (`marginalpdbc`).
+- **Nombre del fichero:** `marginalpdbc_AAAAMMDD.1`, un fichero por día. El `.1` parece un número de versión (pendiente de confirmar).
+- **Mercado day-ahead:** el fichero de un día se publica el día anterior.
+- **Formato:** texto plano, separador `;`, decimales con punto y cada línea termina en `;` (al leerlo con pandas aparece una columna vacía extra).
+- **Cabecera y pie:** la primera línea (`MARGINALPDBC;`) y la última (`*`) no son datos y hay que saltarlas.
+- **Columnas:** año; mes; día; periodo; precio; precio. Las dos columnas de precio son las de España y Portugal. Coinciden salvo cuando hay separación de mercados (*market splitting*). **Pendiente: confirmar en la documentación de OMIE qué columna es cada país.**
+- **Periodos por día (validación con recuento esperado):**
+| Tipo de día | Hasta el 30/09/2025 (horario) | Desde el 01/10/2025 (15 minutos) |
+|---|---|---|
+| Normal | 24 | 96 |
+| Cambio de hora de marzo (último domingo) | 23 | 92 |
+| Cambio de hora de octubre (último domingo) | 25 | 100 |
+ 
 ## Limitaciones y cómo se tratan
 - **REData no sirve datos horarios (comprobado el 24/11/2026):** `demanda/evolucion` y `generacion/estructura-generacion` devuelven error 400 ("Los datos solicitados no están disponibles") con `time_trunc=hour`, también con el filtro peninsular (`geo_ids=8741`). Con `time_trunc=day` funcionan. **Decisión:** usar ESIOS (token solicitado el 24/11/2026) como fuente de demanda y generación horarias; REData queda para datos diarios y comprobaciones.
 - **Datos provisionales (REData):** anotar la fecha de descarga y volver a descargar los meses recientes antes del análisis final.
