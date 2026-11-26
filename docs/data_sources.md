@@ -51,7 +51,7 @@ Revisado a mano el 24/11/2026 con los ficheros del 01/01/2024 y de noviembre de 
 - **Mercado day-ahead:** el fichero de un día se publica el día anterior.
 - **Formato:** texto plano, separador `;`, decimales con punto y cada línea termina en `;` (al leerlo con pandas aparece una columna vacía extra).
 - **Cabecera y pie:** la primera línea (`MARGINALPDBC;`) y la última (`*`) no son datos y hay que saltarlas.
-- **Columnas:** año; mes; día; periodo; precio; precio. Las dos columnas de precio son las de España y Portugal. Coinciden salvo cuando hay separación de mercados (*market splitting*). **Pendiente: confirmar en la documentación de OMIE qué columna es cada país.**
+- **Columnas:** año; mes; día; periodo; precio; precio. Las dos columnas de precio son las de Portugal y España. Coinciden salvo cuando hay separación de mercados (*market splitting*). 
 - **Periodos por día (validación con recuento esperado):**
 
 | Tipo de día | Hasta el 30/09/2025 (horario) | Desde el 01/10/2025 (15 minutos) |
